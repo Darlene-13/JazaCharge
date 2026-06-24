@@ -1,95 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>JazaCharge — EV Swap Dashboard</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>JazaCharge — Operations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-<header>
-    <div class="header-left">
-        <span class="logo">JazaCharge</span>
-        <span class="tagline">EV Battery Swap Network · Nairobi</span>
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-mark">⚡</div>
+        <div>
+            <div class="brand-name">JazaCharge</div>
+            <div class="brand-sub">Operations</div>
+        </div>
     </div>
-    <div class="header-right">
-        <span class="live-dot"></span>
-        <span id="last-updated">Updating...</span>
+
+    <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-section="overview">
+            <span class="nav-icon">◈</span> Overview
+        </a>
+        <a href="#" class="nav-item" data-section="stations">
+            <span class="nav-icon">◉</span> Stations
+        </a>
+        <a href="#" class="nav-item" data-section="reservations">
+            <span class="nav-icon">◎</span> Reservations
+        </a>
+        <a href="#" class="nav-item" data-section="sms">
+            <span class="nav-icon">◷</span> SMS Log
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="pulse-row">
+            <span class="pulse-dot"></span>
+            <span class="pulse-label">Live · Nairobi</span>
+        </div>
+        <div class="last-sync" id="last-updated">Syncing...</div>
     </div>
-</header>
+</aside>
 
-<main>
+<!-- MAIN -->
+<div class="main-wrap">
 
-    <!-- STATS ROW -->
-    <section class="stats-row">
-        <div class="stat-card">
-            <span class="stat-value" id="total-stations">--</span>
-            <span class="stat-label">Active Stations</span>
+    <!-- TOP BAR -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <h1 class="page-title" id="page-title">Overview</h1>
         </div>
-        <div class="stat-card">
-            <span class="stat-value" id="total-batteries">--</span>
-            <span class="stat-label">Available Batteries</span>
+        <div class="topbar-right">
+            <button class="btn-refresh" onclick="loadAll()">
+                <span id="refresh-icon">↻</span> Refresh
+            </button>
         </div>
-        <div class="stat-card">
-            <span class="stat-value" id="total-reservations">--</span>
-            <span class="stat-label">Active Reservations</span>
-        </div>
-        <div class="stat-card">
-            <span class="stat-value" id="total-riders">--</span>
-            <span class="stat-label">Registered Riders</span>
-        </div>
-    </section>
+    </header>
 
-    <div class="grid">
+    <!-- CONTENT -->
+    <main class="content">
 
-        <!-- STATION CARDS -->
-        <section class="panel">
-            <div class="panel-header">
-                <h2>Station Status</h2>
-                <button class="refresh-btn" onclick="loadStations()">↻ Refresh</button>
+        <!-- ── OVERVIEW SECTION ── -->
+        <section id="section-overview" class="section active">
+
+            <!-- KPI ROW -->
+            <div class="kpi-row">
+                <div class="kpi-card">
+                    <div class="kpi-top">
+                        <span class="kpi-icon green">⬡</span>
+                        <span class="kpi-trend" id="trend-stations">—</span>
+                    </div>
+                    <div class="kpi-value" id="total-stations">--</div>
+                    <div class="kpi-label">Active Stations</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-top">
+                        <span class="kpi-icon yellow">◈</span>
+                        <span class="kpi-trend" id="trend-batteries">—</span>
+                    </div>
+                    <div class="kpi-value" id="total-batteries">--</div>
+                    <div class="kpi-label">Batteries Available</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-top">
+                        <span class="kpi-icon blue">◎</span>
+                        <span class="kpi-trend" id="trend-reservations">—</span>
+                    </div>
+                    <div class="kpi-value" id="total-reservations">--</div>
+                    <div class="kpi-label">Active Reservations</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-top">
+                        <span class="kpi-icon purple">◉</span>
+                        <span class="kpi-trend" id="trend-riders">—</span>
+                    </div>
+                    <div class="kpi-value" id="total-riders">--</div>
+                    <div class="kpi-label">Registered Riders</div>
+                </div>
             </div>
-            <div id="stations-grid" class="stations-grid">
-                <div class="loading">Loading stations...</div>
+
+            <!-- OVERVIEW GRID -->
+            <div class="overview-grid">
+
+                <!-- STATION MAP PANEL -->
+                <div class="panel panel-stations">
+                    <div class="panel-head">
+                        <span class="panel-title">Station Network</span>
+                        <span class="panel-badge green" id="stations-online">0 online</span>
+                    </div>
+                    <div id="stations-grid" class="stations-list">
+                        <div class="skeleton-loader">
+                            <div class="skel"></div><div class="skel"></div><div class="skel"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LIVE FEED PANEL -->
+                <div class="panel panel-feed">
+                    <div class="panel-head">
+                        <span class="panel-title">Live Reservations</span>
+                        <span class="panel-badge blue" id="reservations-count">0 active</span>
+                    </div>
+                    <div id="reservations-list" class="feed-list">
+                        <div class="skeleton-loader">
+                            <div class="skel"></div><div class="skel"></div><div class="skel"></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
-        <!-- RESERVATIONS FEED -->
-        <section class="panel">
-            <div class="panel-header">
-                <h2>Live Reservations</h2>
-                <span class="badge" id="reservations-count">0</span>
-            </div>
-            <div id="reservations-list" class="reservations-list">
-                <div class="loading">Loading reservations...</div>
+        <!-- ── STATIONS SECTION ── -->
+        <section id="section-stations" class="section">
+            <div class="panel">
+                <div class="panel-head">
+                    <span class="panel-title">All Stations</span>
+                    <button class="btn-sm" onclick="loadStations()">Reload</button>
+                </div>
+                <div id="stations-table-wrap" class="table-wrap">
+                    <table class="data-table" id="stations-table">
+                        <thead>
+                        <tr>
+                            <th>Station</th>
+                            <th>Location</th>
+                            <th>Batteries</th>
+                            <th>Reservations</th>
+                            <th>Status</th>
+                            <th>Fill</th>
+                        </tr>
+                        </thead>
+                        <tbody id="stations-tbody">
+                        <tr><td colspan="6" class="empty-cell">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
-    </div>
+        <!-- ── RESERVATIONS SECTION ── -->
+        <section id="section-reservations" class="section">
+            <div class="panel">
+                <div class="panel-head">
+                    <span class="panel-title">All Reservations</span>
+                    <div class="filter-row">
+                        <button class="filter-btn active" data-filter="ALL">All</button>
+                        <button class="filter-btn" data-filter="ACTIVE">Active</button>
+                        <button class="filter-btn" data-filter="COMPLETED">Completed</button>
+                        <button class="filter-btn" data-filter="EXPIRED">Expired</button>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table class="data-table">
+                        <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Rider</th>
+                            <th>Station</th>
+                            <th>Battery</th>
+                            <th>Created</th>
+                            <th>Expires</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody id="reservations-tbody">
+                        <tr><td colspan="7" class="empty-cell">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
-    <!-- SMS LOG -->
-    <section class="panel full-width">
-        <div class="panel-header">
-            <h2>Incoming SMS Log</h2>
-            <span class="badge warning" id="sms-count">0</span>
-        </div>
-        <table class="sms-table">
-            <thead>
-            <tr>
-                <th>Time</th>
-                <th>Phone</th>
-                <th>Message</th>
-                <th>Action Taken</th>
-                <th>Status</th>
-            </tr>
-            </thead>
-            <tbody id="sms-log-body">
-            <tr><td colspan="5" class="empty">No messages yet</td></tr>
-            </tbody>
-        </table>
-    </section>
+        <!-- ── SMS LOG SECTION ── -->
+        <section id="section-sms" class="section">
+            <div class="panel">
+                <div class="panel-head">
+                    <span class="panel-title">SMS Activity Log</span>
+                    <span class="panel-badge orange" id="sms-count">0 messages</span>
+                </div>
+                <div class="table-wrap">
+                    <table class="data-table sms-table">
+                        <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Phone</th>
+                            <th>Message</th>
+                            <th>Action</th>
+                            <th>Result</th>
+                        </tr>
+                        </thead>
+                        <tbody id="sms-log-body">
+                        <tr><td colspan="5" class="empty-cell">No messages yet — waiting for inbound SMS</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
-</main>
+    </main>
+</div>
 
 <script src="script.js"></script>
 </body>
