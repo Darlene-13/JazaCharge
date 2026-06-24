@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Upepo — EV Swap Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <span class="logo">JazaCharge</span>
+        <span class="tagline">EV Battery Swap Network · Nairobi</span>
+    </div>
+    <div class="header-right">
+        <span class="live-dot"></span>
+        <span id="last-updated">Updating...</span>
+    </div>
+</header>
+
+<main>
+
+    <!-- STATS ROW -->
+    <section class="stats-row">
+        <div class="stat-card">
+            <span class="stat-value" id="total-stations">--</span>
+            <span class="stat-label">Active Stations</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value" id="total-batteries">--</span>
+            <span class="stat-label">Available Batteries</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value" id="total-reservations">--</span>
+            <span class="stat-label">Active Reservations</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value" id="total-riders">--</span>
+            <span class="stat-label">Registered Riders</span>
+        </div>
+    </section>
+
+    <div class="grid">
+
+        <!-- STATION CARDS -->
+        <section class="panel">
+            <div class="panel-header">
+                <h2>Station Status</h2>
+                <button class="refresh-btn" onclick="loadStations()">↻ Refresh</button>
+            </div>
+            <div id="stations-grid" class="stations-grid">
+                <div class="loading">Loading stations...</div>
+            </div>
+        </section>
+
+        <!-- RESERVATIONS FEED -->
+        <section class="panel">
+            <div class="panel-header">
+                <h2>Live Reservations</h2>
+                <span class="badge" id="reservations-count">0</span>
+            </div>
+            <div id="reservations-list" class="reservations-list">
+                <div class="loading">Loading reservations...</div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- SMS LOG -->
+    <section class="panel full-width">
+        <div class="panel-header">
+            <h2>Incoming SMS Log</h2>
+            <span class="badge warning" id="sms-count">0</span>
+        </div>
+        <table class="sms-table">
+            <thead>
+            <tr>
+                <th>Time</th>
+                <th>Phone</th>
+                <th>Message</th>
+                <th>Action Taken</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody id="sms-log-body">
+            <tr><td colspan="5" class="empty">No messages yet</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
