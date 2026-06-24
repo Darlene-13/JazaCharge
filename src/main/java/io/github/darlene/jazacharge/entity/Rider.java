@@ -3,34 +3,28 @@ package io.github.darlene.jazacharge.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-
 import java.time.LocalDateTime;
 
-
 @Entity
-@Table(name = "users")
-@Getter
-@Setter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "riders")
+@Getter @Setter @Builder @AllArgsConstructor @NoArgsConstructor
 public class Rider {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", nullable = false, unique = true)
-    private String username;
+    @Column(name = "phone_number", nullable = false, unique = true)
+    private String phoneNumber;
 
-    // To be hashed using Argon2
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "last_location")
+    private String lastLocation;
 
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "preferred_battery")
+    private BatteryType preferredBattery;
 
-    @Column(name = "created_at")
     @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 }
