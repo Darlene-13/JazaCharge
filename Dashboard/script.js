@@ -1,4 +1,5 @@
-const API = 'http://localhost:8080/api';
+
+const API = 'https://elimination-cordless-checks-ensure.trycloudflare.com/api';
 const REFRESH_INTERVAL = 10000; // 10 seconds
 
 // INIT

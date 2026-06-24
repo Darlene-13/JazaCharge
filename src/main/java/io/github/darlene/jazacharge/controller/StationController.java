@@ -6,6 +6,7 @@ import io.github.darlene.jazacharge.entity.ReservationStatus;
 import io.github.darlene.jazacharge.repository.BatteryStationRepository;
 import io.github.darlene.jazacharge.repository.ReservationsRepository;
 import io.github.darlene.jazacharge.repository.BatteryRepository;
+import io.github.darlene.jazacharge.repository.RiderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import java.util.List;
 public class StationController {
 
     private final BatteryStationRepository stationRepository;
+    private final RiderRepository riderRepository;
     private final ReservationsRepository reservationsRepository;
     private final BatteryRepository batteryRepository;
 
@@ -50,8 +52,8 @@ public class StationController {
 
     // Dashboard — all riders count
     @GetMapping("/riders")
-    public ResponseEntity<?> getRiders(Pageable pageable) {
-        return ResponseEntity.ok(reservationsRepository.findAll(pageable));
+    public ResponseEntity<?> getRiders() {
+        return ResponseEntity.ok(riderRepository.findAll());
     }
     // Health check
     @GetMapping("/health")
