@@ -1,0 +1,88 @@
+.dashboard {
+  font-family: 'Segoe UI', sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #00c853;
+  padding-bottom: 1rem;
+}
+
+.dashboard-header h1 {
+  color: #00c853;
+  font-size: 2rem;
+  margin: 0;
+}
+
+.dashboard-header p {
+  color: #666;
+  margin: 0.5rem 0 0 0;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  font-size: 1.2rem;
+}
+
+.error {
+  background: #ffebee;
+  color: #c62828;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.stations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.station-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-left: 4px solid #00c853;
+}
+
+.station-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.station-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #1a1a1a;
+}
+
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.active {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.inactive {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.station-body p {
+  margin: 0.5rem 0;
+  color: #444;
+  font-size: 0.95rem;
+}

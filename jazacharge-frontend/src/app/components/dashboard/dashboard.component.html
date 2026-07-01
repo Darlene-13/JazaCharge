@@ -1,0 +1,38 @@
+<div class="dashboard">
+
+  <header class="dashboard-header">
+    <h1>JazaCharge Dashboard</h1>
+    <p>Battery Swap Station Monitor</p>
+  </header>
+
+  <!-- Loading state -->
+  <div *ngIf="isLoading" class="loading">
+    Loading stations...
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <!-- Stations grid -->
+  <div *ngIf="!isLoading && !error" class="stations-grid">
+    <div *ngFor="let station of stations" class="station-card">
+
+      <div class="station-header">
+        <h2>{{ station.name }}</h2>
+        <span [class]="station.isActive ? 'badge active' : 'badge inactive'">
+          {{ station.isActive ? 'Active' : 'Inactive' }}
+        </span>
+      </div>
+
+      <div class="station-body">
+        <p>📍 {{ station.location }}</p>
+        <p>🔋 Available Batteries: {{ station.availableBatteries }}</p>
+        <p>📋 Active Reservations: {{ station.activeReservations }}</p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
